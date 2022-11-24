@@ -6,37 +6,48 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 17:14:27 by amaligno          #+#    #+#             */
-/*   Updated: 2022/11/24 15:34:51 by amaligno         ###   ########.fr       */
+/*   Updated: 2022/11/24 16:13:38 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+void	move(const char *s1, const char *s2, char *str)
 {
 	size_t	i;
-	size_t	j;
-	size_t	src_len;
-	size_t	dst_len;
 
-	if ((!dst || !src) && !dstsize)
-		return (0);
-	j = 0;
-	dst_len = ft_strlen(dst);
-	src_len = ft_strlen(src);
-	i = dst_len;
-	if (dstsize < dst_len)
-		return (src_len + dstsize);
-	else
+	i = 0;
+	while (s1[i])
 	{
-		while (src[j] && (dst_len + j) < dstsize)
-			dst[i++] = src[j++];
-		if ((dst_len + j) == dstsize && dst_len < dstsize)
-			dst[--i] = '\0';
-		else
-			dst[i] = '\0';
-		return (src_len + dst_len);
+		str[i] = s1[i];
+		i++;
 	}
+	while (*s2)
+	{
+		str[i] = *s2;
+		i++;
+		s2++;
+	}
+	str[i] = '\0';
+}
+
+char	*ft_strjoin(const char *s1, const char *s2)
+{
+	size_t		len;
+	char		*str;
+
+	if (!s1 && !s2)
+		return (NULL);
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
+	len = (ft_strlen(s1) + ft_strlen(s2));
+	str = malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (NULL);
+	move(s1, s2, str);
+	return (str);
 }
 
 char	*newstr(char *stash, char *buf)
@@ -48,7 +59,7 @@ char	*newstr(char *stash, char *buf)
 	temp = stash;
 	stash = malloc(sizeof(char) * (size));
 	stash = memcpy(stash, temp, size);
-	stash = strlcat(stash, buf, BUFFER_SIZE);
+	stash = ft_strjoin(stash, buf);
 	free(temp);
 	return (stash);
 }
@@ -63,6 +74,7 @@ int	strcheck(char *s)
 		if (*s == '\n')
 			return (count);
 		count++;
+		s++;
 	}
 	return (0);
 }
