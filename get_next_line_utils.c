@@ -6,36 +6,19 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 17:14:27 by amaligno          #+#    #+#             */
-/*   Updated: 2022/11/24 16:13:38 by amaligno         ###   ########.fr       */
+/*   Updated: 2022/12/01 17:07:46 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	move(const char *s1, const char *s2, char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (s1[i])
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	while (*s2)
-	{
-		str[i] = *s2;
-		i++;
-		s2++;
-	}
-	str[i] = '\0';
-}
-
 char	*ft_strjoin(const char *s1, const char *s2)
 {
+	size_t		i;
 	size_t		len;
 	char		*str;
 
+	i = 0;
 	if (!s1 && !s2)
 		return (NULL);
 	if (!s1)
@@ -46,21 +29,27 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	str = malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
-	move(s1, s2, str);
+	while (s1[i++])
+		str[i] = s1[i];
+	while (*s2)
+	{
+		str[i] = *s2;
+		i++;
+		s2++;
+	}
+	str[i] = '\0';
 	return (str);
 }
 
 char	*newstr(char *stash, char *buf)
 {
 	char		*temp;
-	static int	size;
 
-	size += BUFFER_SIZE;
 	temp = stash;
-	stash = malloc(sizeof(char) * (size));
-	stash = memcpy(stash, temp, size);
-	stash = ft_strjoin(stash, buf);
-	free(temp);
+	printf("this is temp %s\n", temp);
+	stash = ft_strdup(ft_strjoin(temp, buf));
+	if (temp)
+		free(temp);
 	return (stash);
 }
 
@@ -69,10 +58,13 @@ int	strcheck(char *s)
 	int	count;
 
 	count = 0;
-	while (s)
+	while (*s)
 	{
 		if (*s == '\n')
+		{
+			// printf("this is count %d\n", count);
 			return (count);
+		}
 		count++;
 		s++;
 	}
