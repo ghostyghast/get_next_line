@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 17:14:27 by amaligno          #+#    #+#             */
-/*   Updated: 2022/12/13 17:46:43 by amaligno         ###   ########.fr       */
+/*   Updated: 2023/01/16 19:53:53 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,16 @@ char	*ft_strjoin(char *s1, char *s2)
 	char		*str;
 
 	i = 0;
-	if (!s1 || !s2)
-		return (NULL);
 	len = (ft_strlen(s1) + ft_strlen(s2));
 	str = malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
-	while (s1[i++])
+	while (s1[i])
+	{
 		str[i] = s1[i];
+		i++;
+	}
+	// printf("this is str after s1 [%s]\n", str);
 	while (*s2)
 	{
 		str[i] = *s2;
@@ -71,16 +73,9 @@ void	*ft_memcpy(void *dst, void *src, size_t n)
 size_t	ft_strlen(char *str)
 {
 	int		num;
-	char	*ptr;
 
 	num = 0;
-	ptr = (char *)str;
-	while (true)
-	{
-		if (*ptr == '\0')
-			break ;
-		ptr++;
+	while (str[num])
 		num++;
-	}
 	return (num);
 }
