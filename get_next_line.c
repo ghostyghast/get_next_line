@@ -6,13 +6,13 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 17:12:44 by amaligno          #+#    #+#             */
-/*   Updated: 2023/01/16 19:53:57 by amaligno         ###   ########.fr       */
+/*   Updated: 2023/02/01 17:37:55 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*strtrim(char *tocut, const char *line)
+char	*strtrim(char *tocut, char *line)
 {
 	int		start;
 	int		end;
@@ -30,48 +30,65 @@ char	*strtrim(char *tocut, const char *line)
 	if (!new)
 		return (NULL);
 	while (start < end)
-	{
-		new[i++] = line[++start];
-	}
+		new[i++] = line[start++];
+	// printf("new : %s\n", new);
 	return (new);
 }
 
-char	*newstr(char *stash, char *buf)
+char	*newstr(char **stash, char *buf, int fd)
 {
 	char		*temp;
 
-	if (!stash)
-		stash = malloc(sizeof(char) * 1);
-	temp = ft_strjoin(stash, buf);
-	free(stash);
-	return (temp);
+	if (!stash[fd])
+	{
+		stash[fd] = malloc(sizeof(char) * 1);
+		stash[fd][0] = '\0';
+	}
+	temp = ft_strjoin(stash[fd], buf);
+	free(stash[fd]);
+	stash[fd] = temp;
+	// printf("newstr stash : %s\n", stash[fd]);
+	return (stash[fd]);
+}
+
+char	*sender(char **stash, char *temp, int fd)
+{
+	char	*send;
+
+	send = to_send(stash[fd]);
+	temp = strtrim(send, stash[fd]);
+	free(stash[fd]);
+	stash[fd] = temp;
+	// printf("send stash : %s\n", stash[fd]);
+	return(send);
 }
 
 char	*get_next_line(int fd)
 {
-	char			buf[BUFFER_SIZE + 1];
-	static char		*stash;
-	char			*send;
 	int				read_value;
+	char			buf[BUFFER_SIZE + 1];
+	static char		*stash[4096];
+	char			*temp;
 
-	// printf("this is stash [%s]\n", stash);
 	read_value = 1;
-	while (read_value > 0)
+	while (read_value)
 	{
 		read_value = read(fd, buf, BUFFER_SIZE);
 		buf[read_value] = '\0';
-		// printf("this is stash before newstr %s\n", stash);
-		stash = newstr(stash, buf);
-		// printf("[this is start after newstr [%d]\n", start);
-		if (strcheck(stash))
+		if (read_value <= 0 && !stash[fd])
+			return (NULL);
+		temp = newstr(stash, buf, fd);
+		if (strcheck(stash[fd]) || read_value <= 0)
 			break ;
 	}
-	send = malloc(sizeof(char) * (strcheck(stash) + 1));
-	send = memcpy(send, stash, strcheck(stash));
-	// printf("this is stash b4 strim [%s]\n", stash);
-	stash = strtrim(send, stash);
-	// printf("this is trim stash [%s]\n", stash);
-	return (send);
+	if (read_value || stash[fd][0])
+	{	
+		// printf("temp : [%s]\n", temp);
+		return (sender(stash, temp, fd));
+	}
+	free(stash[fd]);
+	stash[fd] = NULL;
+	return (NULL);
 }
 
 int	main(void)
@@ -85,8 +102,6 @@ int	main(void)
         printf("Failed to open & read file.\n");
         return (1);
     }
-	while (i++ < 1)
-	{
+	while (i++ < 4)
 		printf("main: [%s]\n", get_next_line(fd));
-	}
 }

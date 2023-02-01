@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 17:14:27 by amaligno          #+#    #+#             */
-/*   Updated: 2023/01/16 19:53:53 by amaligno         ###   ########.fr       */
+/*   Updated: 2023/02/01 19:15:49 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ char	*ft_strjoin(char *s1, char *s2)
 		str[i] = s1[i];
 		i++;
 	}
-	// printf("this is str after s1 [%s]\n", str);
 	while (*s2)
 	{
 		str[i] = *s2;
@@ -42,34 +41,18 @@ char	*ft_strjoin(char *s1, char *s2)
 int	strcheck(char *s)
 {
 	int	count;
+	int	index;
 
-	count = 0;
-	while (*s)
+	count = -1;
+	index = strlen(s) + 1;
+	while (++count < index)
 	{
-		if (*s == '\n')
-		{
-			// printf("this is count %d\n", count);
+		if (s[count] == '\n')
 			return (count);
-		}
-		count++;
-		s++;
 	}
 	return (0);
 }
 
-void	*ft_memcpy(void *dst, void *src, size_t n)
-{
-	unsigned char	*s;
-	unsigned char	*d;
-
-	if (!dst && !src)
-		return (NULL);
-	d = (unsigned char *)dst;
-	s = (unsigned char *)src;
-	while (n--)
-		*d++ = *s++;
-	return (dst);
-}
 size_t	ft_strlen(char *str)
 {
 	int		num;
@@ -78,4 +61,27 @@ size_t	ft_strlen(char *str)
 	while (str[num])
 		num++;
 	return (num);
+}
+
+char	*to_send(char *str)
+{
+	char	*nl;
+	int		index;
+
+	index = 0;
+	while (str[index] != '\n' && str[index] != '\0')
+		++ index;
+	if (str[index] == '\n')
+		++ index;
+	// printf("index : %d\n", index);
+	nl = (char *)malloc((index + 1) * sizeof(char));
+	if (!nl)
+		return (NULL);
+	nl[index + 1] = '\0';
+	while (--index > 0)
+		nl[index] = str[index];
+	// printf("nl : %c", nl[index]);
+	nl[index] = str[index];
+	printf("nl : %s", nl);
+	return (nl);
 }
