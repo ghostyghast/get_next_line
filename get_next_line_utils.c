@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 17:14:27 by amaligno          #+#    #+#             */
-/*   Updated: 2023/02/01 19:15:49 by amaligno         ###   ########.fr       */
+/*   Updated: 2023/02/02 15:19:43 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	char		*str;
 
 	i = 0;
-	len = (ft_strlen(s1) + ft_strlen(s2));
+	len = (length(s1) + length(s2));
 	str = malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
@@ -44,7 +44,7 @@ int	strcheck(char *s)
 	int	index;
 
 	count = -1;
-	index = strlen(s) + 1;
+	index = length(s) + 1;
 	while (++count < index)
 	{
 		if (s[count] == '\n')
@@ -53,7 +53,7 @@ int	strcheck(char *s)
 	return (0);
 }
 
-size_t	ft_strlen(char *str)
+size_t	length(char *str)
 {
 	int		num;
 
@@ -82,6 +82,6 @@ char	*to_send(char *str)
 		nl[index] = str[index];
 	// printf("nl : %c", nl[index]);
 	nl[index] = str[index];
-	printf("nl : %s", nl);
+	// printf("nl : %s", nl);cle
 	return (nl);
 }

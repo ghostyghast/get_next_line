@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 17:12:44 by amaligno          #+#    #+#             */
-/*   Updated: 2023/02/01 17:37:55 by amaligno         ###   ########.fr       */
+/*   Updated: 2023/02/02 15:19:42 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*strtrim(char *tocut, char *line)
 		return (NULL);
 	start = 0;
 	i = 0;
-	end = strlen(line);
+	end = length(line);
 	while (tocut[start] == line[start] && tocut[start] && line[start])
 		start++;
 	new = malloc(sizeof(char) * (end - start + 1));
@@ -91,17 +91,17 @@ char	*get_next_line(int fd)
 	return (NULL);
 }
 
-int	main(void)
-{
-	static int	fd;
-	int	i = 0;
+// int	main(void)
+// {
+// 	static int	fd;
+// 	int	i = 0;
 
-    fd = open("dumb.txt", O_RDONLY);
-    if (fd == -1)
-    {
-        printf("Failed to open & read file.\n");
-        return (1);
-    }
-	while (i++ < 4)
-		printf("main: [%s]\n", get_next_line(fd));
-}
+//     fd = open("dumb.txt", O_RDONLY);
+//     if (fd == -1)
+//     {
+//         printf("Failed to open & read file.\n");
+//         return (1);
+//     }
+// 	while (i++ < 4)
+// 		printf("main: [%s]\n", get_next_line(fd));
+// }ç
