@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 17:12:44 by amaligno          #+#    #+#             */
-/*   Updated: 2023/02/02 15:19:42 by amaligno         ###   ########.fr       */
+/*   Updated: 2023/02/02 20:22:43 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char	*newstr(char **stash, char *buf, int fd)
 		stash[fd][0] = '\0';
 	}
 	temp = ft_strjoin(stash[fd], buf);
+	// printf("stash : %s\n", temp);
 	free(stash[fd]);
 	stash[fd] = temp;
 	// printf("newstr stash : %s\n", stash[fd]);
@@ -57,6 +58,7 @@ char	*sender(char **stash, char *temp, int fd)
 
 	send = to_send(stash[fd]);
 	temp = strtrim(send, stash[fd]);
+	printf("trimmed [%s]\n", temp);
 	free(stash[fd]);
 	stash[fd] = temp;
 	// printf("send stash : %s\n", stash[fd]);
@@ -91,17 +93,17 @@ char	*get_next_line(int fd)
 	return (NULL);
 }
 
-// int	main(void)
-// {
-// 	static int	fd;
-// 	int	i = 0;
+int	main(void)
+{
+	static int	fd;
+	int	i = 0;
 
-//     fd = open("dumb.txt", O_RDONLY);
-//     if (fd == -1)
-//     {
-//         printf("Failed to open & read file.\n");
-//         return (1);
-//     }
-// 	while (i++ < 4)
-// 		printf("main: [%s]\n", get_next_line(fd));
-// }ç
+    fd = open("dumb.txt", O_RDONLY);
+    if (fd == -1)
+    {
+        printf("Failed to open & read file.\n");
+        return (1);
+    }
+	while (i++ < 3)
+		printf("main: [%s]\n", get_next_line(fd));
+}

@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 17:14:27 by amaligno          #+#    #+#             */
-/*   Updated: 2023/02/02 15:19:43 by amaligno         ###   ########.fr       */
+/*   Updated: 2023/02/02 20:22:30 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	strcheck(char *s)
 	while (++count < index)
 	{
 		if (s[count] == '\n')
-			return (count);
+			return (1);
 	}
 	return (0);
 }
@@ -73,15 +73,17 @@ char	*to_send(char *str)
 		++ index;
 	if (str[index] == '\n')
 		++ index;
-	// printf("index : %d\n", index);
 	nl = (char *)malloc((index + 1) * sizeof(char));
 	if (!nl)
 		return (NULL);
 	nl[index + 1] = '\0';
 	while (--index > 0)
+	{
 		nl[index] = str[index];
-	// printf("nl : %c", nl[index]);
+		// printf("nl : [%c]\n index : %i\n", nl[index], index);
+	}
 	nl[index] = str[index];
+	// printf("nl : [%c]\n index : %i\n", nl[index], index);
 	// printf("nl : %s", nl);cle
 	return (nl);
 }
