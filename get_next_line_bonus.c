@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 17:12:44 by amaligno          #+#    #+#             */
-/*   Updated: 2023/02/07 18:01:35 by amaligno         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:07:07 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,18 +87,3 @@ char	*get_next_line(int fd)
 	stash[fd] = NULL;
 	return (NULL);
 }
-
-// int	main(void)
-// {
-// 	static int	fd;
-// 	int	i = 0;
-
-//     fd = open("dumb.txt", O_RDONLY);
-//     if (fd == -1)
-//     {
-//         printf("Failed to open & read file.\n");
-//         return (1);
-//     }
-// 	while (i++ < 5)
-// 		printf("main: [%s]\n", get_next_line(fd));
-// }
